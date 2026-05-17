@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rostr — The easiest way to hire and pay Nigerian talent, legally.</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#FFFFFF;--off:#F8F6F3;--off2:#F0EDE8;
+  --charcoal:#0D1B2A;--charcoal-mid:#1E3045;
+  --coral:#FF6B4A;--coral-h:#E85A3A;--coral-l:rgba(255,107,74,.07);--coral-b:rgba(255,107,74,.22);
+  --muted:#6B7A8D;--dim:#B0BAC6;--border:#E4E0D8;--border2:#EBE8E2;
+  --r:10px;--rl:18px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--charcoal);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.5px}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nlogo{font-weight:900;font-size:1.35rem;color:var(--charcoal);letter-spacing:-.5px;font-family:'Plus Jakarta Sans',sans-serif}
+.nlogo span{color:var(--coral)}
+.nlinks{display:flex;gap:2rem;list-style:none}
+.nlinks a{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--charcoal)}
+.ncta{background:var(--coral);color:#fff;font-weight:700;font-size:.875rem;padding:.6rem 1.4rem;border-radius:6px;transition:background .2s,transform .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.ncta:hover{background:var(--coral-h);transform:translateY(-1px)}
+
+/* HERO */
+.hero{padding:9rem 3rem 6rem;background:var(--white);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:var(--coral-l);border:1px solid var(--coral-b);color:var(--coral);font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:.35rem 1rem;border-radius:100px;margin-bottom:1.75rem}
+.hero h1{font-size:clamp(2.6rem,5vw,4.6rem);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--charcoal);margin-bottom:1.5rem}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:46ch;line-height:1.75;margin-bottom:2.5rem}
+.hero-sub strong{color:var(--charcoal);font-weight:600}
+.hero-actions{display:flex;gap:.85rem;align-items:center;margin-bottom:2.5rem;flex-wrap:wrap}
+.btn-coral{background:var(--coral);color:#fff;font-weight:700;font-size:1rem;padding:.9rem 2rem;border-radius:8px;border:none;cursor:pointer;display:inline-block;transition:background .2s,transform .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-coral:hover{background:var(--coral-h);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--muted);font-weight:600;font-size:.95rem;padding:.85rem 1.75rem;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;display:inline-block;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-outline:hover{border-color:var(--charcoal);color:var(--charcoal)}
+.hero-trust{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.trust-logos{display:flex;gap:.6rem;flex-wrap:wrap}
+.trust-pill{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--dim);background:var(--off);border:1px solid var(--border);padding:.25rem .7rem;border-radius:4px}
+.trust-text{font-size:.78rem;color:var(--dim)}
+
+/* PIPELINE MOCKUP */
+.pipeline-wrap{position:relative}
+.pipeline-float{position:absolute;top:-16px;right:-16px;background:var(--coral);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:500;padding:.3rem .8rem;border-radius:100px;white-space:nowrap;box-shadow:0 4px 12px rgba(255,107,74,.35)}
+.pipeline-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;box-shadow:0 20px 60px rgba(13,27,42,.1),0 4px 16px rgba(13,27,42,.05)}
+
+/* Card header */
+.pc-header{background:var(--charcoal);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.pc-logo{font-weight:900;font-size:.95rem;color:#fff}
+.pc-logo span{color:var(--coral)}
+.pc-badge{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:rgba(255,255,255,.35);background:rgba(255,255,255,.06);padding:.2rem .55rem;border-radius:4px}
+
+/* Candidate row */
+.pc-candidate{display:flex;align-items:center;gap:.9rem;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
+.pc-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF6B4A,#E85A3A);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+.pc-name{font-weight:700;font-size:.9rem;color:var(--charcoal)}
+.pc-role{font-size:.72rem;color:var(--muted)}
+.pc-location{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--dim)}
+
+/* Timeline steps */
+.pc-timeline{padding:1.25rem 1.5rem}
+.pc-step{display:flex;align-items:flex-start;gap:.85rem;padding:.6rem 0;position:relative}
+.pc-step:not(:last-child)::after{content:'';position:absolute;left:10px;top:28px;width:1px;height:calc(100% - 12px);background:var(--border2)}
+.pcs-icon{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;position:relative;z-index:1}
+.pcs-done{background:rgba(34,197,94,.1);border:1.5px solid rgba(34,197,94,.3);color:#16A34A}
+.pcs-active{background:var(--coral-l);border:1.5px solid var(--coral-b);color:var(--coral);animation:pcspin .8s linear infinite}
+@keyframes pcspin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.pcs-pending{background:var(--off2);border:1.5px solid var(--border);color:var(--dim)}
+.pcs-body{flex:1}
+.pcs-label{font-size:.78rem;font-weight:600;color:var(--charcoal);line-height:1.2}
+.pcs-active-label{color:var(--coral)}
+.pcs-sub{font-size:.65rem;color:var(--dim);margin-top:.1rem}
+.pcs-day{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim)}
+
+/* Card footer */
+.pc-footer{background:var(--off);border-top:1px solid var(--border);padding:.85rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.pc-footer-left{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted)}
+.pc-footer-right{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);font-weight:500}
+
+/* STATS */
+.stats-bar{background:var(--off);border-bottom:1px solid var(--border);padding:2.5rem 3rem}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.stat{text-align:center;padding:.5rem 2rem;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.sn{font-size:2.2rem;font-weight:900;color:var(--charcoal);letter-spacing:-1px}
+.sn .coral{color:var(--coral)}
+.sl{font-size:.78rem;color:var(--muted);margin-top:.2rem;line-height:1.4}
+
+/* SECTION COMMON */
+.sw{max-width:1200px;margin:0 auto;padding:6rem 3rem}
+.slbl{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:1rem}
+.sh{margin-bottom:3rem}
+.sh h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;letter-spacing:-1px;line-height:1.1;color:var(--charcoal);margin-bottom:.75rem}
+.sh h2 em{font-style:normal;color:var(--coral)}
+.sh p{color:var(--muted);font-size:1.05rem;max-width:52ch;line-height:1.7}
+
+/* PROBLEM */
+.prob-bg{background:var(--white);border-bottom:1px solid var(--border)}
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.prob-card{background:var(--off);border:1px solid var(--border);border-radius:var(--rl);padding:1.75rem;position:relative;overflow:hidden}
+.prob-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--coral)}
+.prob-num{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);letter-spacing:1px;margin-bottom:.85rem;text-transform:uppercase}
+.prob-card h3{font-size:1.05rem;font-weight:700;color:var(--charcoal);margin-bottom:.5rem}
+.prob-card p{font-size:.875rem;color:var(--muted);line-height:1.65}
+.prob-tag{display:inline-block;margin-top:.85rem;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--dim);background:var(--white);border:1px solid var(--border);padding:.2rem .6rem;border-radius:4px}
+
+/* HOW IT WORKS — TIMELINE */
+.how-bg{background:var(--off);border-bottom:1px solid var(--border)}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;position:relative}
+.timeline::before{content:'';position:absolute;top:1.5rem;left:calc(12.5% + .5rem);right:calc(12.5% + .5rem);height:1px;background:var(--border);z-index:0}
+.tl-step{text-align:center;padding:0 1rem;position:relative;z-index:1}
+.tl-num{width:48px;height:48px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-weight:900;font-size:1rem;color:var(--muted);transition:all .3s}
+.tl-step.active .tl-num{background:var(--coral);border-color:var(--coral);color:#fff;box-shadow:0 4px 16px rgba(255,107,74,.3)}
+.tl-step h3{font-size:.95rem;font-weight:700;color:var(--charcoal);margin-bottom:.4rem}
+.tl-step p{font-size:.8rem;color:var(--muted);line-height:1.55}
+.tl-badge{display:inline-block;margin-top:.6rem;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);background:var(--coral-l);border:1px solid var(--coral-b);padding:.2rem .6rem;border-radius:4px}
+
+/* FEATURES */
+.feat-bg{background:var(--white);border-bottom:1px solid var(--border)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.feat-item{padding:1.75rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--white);transition:background .2s}
+.feat-item:hover{background:var(--off)}
+.feat-item:nth-child(3n){border-right:none}
+.feat-item:nth-child(4),.feat-item:nth-child(5),.feat-item:nth-child(6){border-bottom:none}
+.feat-icon{width:40px;height:40px;background:var(--coral-l);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1.1rem}
+.feat-item h3{font-size:1rem;font-weight:700;color:var(--charcoal);margin-bottom:.45rem}
+.feat-item p{font-size:.845rem;color:var(--muted);line-height:1.6}
+
+/* WHO IT'S FOR */
+.who-bg{background:var(--off);border-bottom:1px solid var(--border)}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.who-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:2.25rem}
+.who-card.featured{background:var(--charcoal);border-color:var(--charcoal)}
+.who-tag{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);background:var(--coral-l);border:1px solid var(--coral-b);padding:.2rem .65rem;border-radius:4px;display:inline-block;margin-bottom:1.25rem}
+.who-card.featured .who-tag{background:rgba(255,107,74,.12);border-color:rgba(255,107,74,.25)}
+.who-card h3{font-size:1.2rem;font-weight:900;color:var(--charcoal);margin-bottom:.75rem;letter-spacing:-.5px}
+.who-card.featured h3{color:#fff}
+.who-card p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.who-card.featured p{color:rgba(255,255,255,.4)}
+.who-list{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.who-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;color:var(--muted)}
+.who-card.featured .who-list li{color:rgba(255,255,255,.4)}
+.who-list li::before{content:'→';color:var(--coral);flex-shrink:0;margin-top:.15rem}
+
+/* TESTIMONIALS */
+.testi-bg{background:var(--white);border-bottom:1px solid var(--border)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-top:3rem}
+.tcard{background:var(--off);border:1px solid var(--border);border-radius:var(--rl);padding:2rem;transition:border-color .2s}
+.tcard:hover{border-color:var(--coral-b)}
+.tmark{font-size:2.5rem;font-weight:900;color:var(--coral-b);line-height:1;margin-bottom:.85rem}
+.ttext{font-size:.975rem;color:var(--charcoal);line-height:1.75;margin-bottom:1.5rem}
+.tauthor{display:flex;align-items:center;gap:.75rem}
+.tav{width:40px;height:40px;border-radius:50%;background:var(--coral-l);border:1px solid var(--coral-b);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:var(--coral);flex-shrink:0}
+.tname{font-weight:700;font-size:.875rem;color:var(--charcoal)}
+.trole{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted)}
+
+/* PRICING STRIP */
+.pricing-bg{background:var(--off);border-bottom:1px solid var(--border)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.pcard{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:2rem;transition:transform .2s,border-color .2s}
+.pcard:hover{transform:translateY(-3px);border-color:var(--coral-b)}
+.pcard.feat{background:var(--charcoal);border-color:var(--charcoal)}
+.ptier{font-family:'IBM Plex Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:1rem}
+.feat .ptier{color:rgba(255,255,255,.3)}
+.pop-badge{display:inline-block;background:var(--coral);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;padding:.2rem .65rem;border-radius:4px;margin-bottom:1rem}
+.pamt{font-size:2.5rem;font-weight:900;letter-spacing:-1.5px;color:var(--charcoal);margin-bottom:.2rem}
+.feat .pamt{color:#fff}
+.pamt span{font-size:.9rem;font-weight:400;letter-spacing:0;color:var(--muted)}
+.psub{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--coral);margin-bottom:1rem}
+.feat .psub{color:rgba(255,107,74,.7)}
+.pdesc{font-size:.85rem;color:var(--muted);line-height:1.6;padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.feat .pdesc{color:rgba(255,255,255,.3);border-color:rgba(255,255,255,.07)}
+.plist{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.plist li{display:flex;align-items:center;gap:.6rem;font-size:.875rem;color:var(--muted)}
+.feat .plist li{color:rgba(255,255,255,.4)}
+.pchk{width:17px;height:17px;background:var(--coral-l);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--coral);font-size:.55rem}
+.feat .pchk{background:rgba(255,107,74,.15)}
+.pcta{display:block;text-align:center;margin-top:1.75rem;padding:.8rem;border-radius:8px;font-weight:700;font-size:.9rem;transition:all .2s}
+.pcta-out{border:1.5px solid var(--charcoal);color:var(--charcoal)}
+.pcta-out:hover{background:var(--charcoal);color:#fff}
+.pcta-solid{background:var(--coral);color:#fff;border:1.5px solid var(--coral)}
+.pcta-solid:hover{background:var(--coral-h)}
+.pcta-ghost{border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
+.pcta-ghost:hover{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* CTA */
+.cta-wrap{background:var(--charcoal);padding:8rem 3rem;text-align:center;position:relative;overflow:hidden}
+.cta-blob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:350px;background:radial-gradient(ellipse,rgba(255,107,74,.08) 0%,transparent 70%);pointer-events:none}
+.cta-inner{max-width:700px;margin:0 auto;position:relative;z-index:1}
+.cta-lbl{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:1.25rem}
+.cta-wrap h2{font-size:clamp(2.2rem,4.5vw,4.2rem);font-weight:900;letter-spacing:-2px;line-height:1.06;color:#fff;margin-bottom:1.25rem}
+.cta-wrap h2 em{font-style:normal;color:var(--coral)}
+.cta-wrap p{color:rgba(255,255,255,.35);font-size:1.05rem;margin-bottom:2.5rem;line-height:1.7}
+.cta-note{margin-top:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.2)}
+
+/* FOOTER */
+footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,.06);padding:2.5rem 3rem}
+.fi{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.flogo{font-weight:900;font-size:1.2rem;color:#fff}
+.flogo span{color:var(--coral)}
+.fcopy{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.2)}
+.flinks{display:flex;gap:1.5rem;list-style:none}
+.flinks a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.2);transition:color .2s}
+.flinks a:hover{color:rgba(255,255,255,.5)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px)}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nlinks{display:none}
+  .hero{padding:7rem 1.5rem 4rem}
+  .hero-grid{grid-template-columns:1fr;gap:3rem}
+  .sw{padding:4rem 1.5rem}
+  .timeline{grid-template-columns:1fr 1fr;gap:2rem}.timeline::before{display:none}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .feat-item:nth-child(2n){border-right:none}.feat-item:nth-child(5){border-bottom:1px solid var(--border)}
+  .who-grid,.pricing-grid{grid-template-columns:1fr}
+  .stats-bar{padding:2rem 1.5rem}
+  .stat{border-right:none;border-bottom:1px solid var(--border);padding:1rem 0}.stat:last-child{border-bottom:none}
+  .cta-wrap{padding:5rem 1.5rem}
+  footer{padding:2rem 1.5rem}.fi{flex-direction:column;text-align:center}.flinks{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nlogo">Rostr<span>.</span></div>
+  <ul class="nlinks">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#who">Who it's for</a></li>
+  </ul>
+  <a href="#cta" class="ncta">Hire Nigerian talent</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-eyebrow" id="heyebrow">Employer of Record · Nigeria</div>
+      <h1 id="hh1">The easiest way to hire and pay Nigerian talent. <em>Legally.</em></h1>
+      <p class="hero-sub" id="hsub">No Nigerian entity required. Rostr acts as the <strong>Employer of Record</strong> — handling contracts, tax compliance, and multi-currency payroll — so you can hire in Lagos from anywhere in the world.</p>
+      <div class="hero-actions" id="hact">
+        <a href="#cta" class="btn-coral">Hire your first engineer →</a>
+        <a href="#how" class="btn-outline">See how it works</a>
+      </div>
+      <div class="hero-trust" id="htrust">
+        <div class="trust-logos">
+          <span class="trust-pill">CBN Compliant</span>
+          <span class="trust-pill">FIRS Registered</span>
+          <span class="trust-pill">ISO 27001</span>
+        </div>
+        <div class="trust-text">Trusted by 340+ global companies</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE MOCKUP -->
+    <div class="pipeline-wrap reveal" id="hmock">
+      <div class="pipeline-float">New hire · In progress</div>
+      <div class="pipeline-card">
+        <div class="pc-header">
+          <div class="pc-logo">Rostr<span>.</span></div>
+          <div class="pc-badge">HIRE-2048</div>
+        </div>
+        <div class="pc-candidate">
+          <div class="pc-av">AO</div>
+          <div>
+            <div class="pc-name">Amara Okafor</div>
+            <div class="pc-role">Senior Frontend Engineer</div>
+            <div class="pc-location">📍 Lagos, Nigeria</div>
+          </div>
+        </div>
+        <div class="pc-timeline">
+          <div class="pc-step" id="ps1">
+            <div class="pcs-icon pcs-done">✓</div>
+            <div class="pcs-body">
+              <div class="pcs-label">Hire request submitted</div>
+              <div class="pcs-sub">Role, salary, and start date confirmed</div>
+            </div>
+            <div class="pcs-day">Day 1</div>
+          </div>
+          <div class="pc-step" id="ps2">
+            <div class="pcs-icon pcs-done">✓</div>
+            <div class="pcs-body">
+              <div class="pcs-label">Compliance cleared</div>
+              <div class="pcs-sub">Tax registration and legal checks complete</div>
+            </div>
+            <div class="pcs-day">Day 2</div>
+          </div>
+          <div class="pc-step" id="ps3">
+            <div class="pcs-icon pcs-done">✓</div>
+            <div class="pcs-body">
+              <div class="pcs-label">Contract signed</div>
+              <div class="pcs-sub">E-signed employment agreement sent and returned</div>
+            </div>
+            <div class="pcs-day">Day 3</div>
+          </div>
+          <div class="pc-step" id="ps4">
+            <div class="pcs-icon pcs-active">⟳</div>
+            <div class="pcs-body">
+              <div class="pcs-label pcs-active-label">Onboarding in progress</div>
+              <div class="pcs-sub">Benefits enrolled · Equipment ordered</div>
+            </div>
+            <div class="pcs-day">Day 5</div>
+          </div>
+        </div>
+        <div class="pc-footer">
+          <div class="pc-footer-left">$3,500/month · USD payroll</div>
+          <div class="pc-footer-right">Onboarding on track ↗</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="sn" data-target="5" data-suffix=" days">0</div><div class="sl">Average time to onboard a new hire</div></div>
+    <div class="stat"><div class="sn" data-target="340" data-suffix="+">0</div><div class="sl">Global companies hiring through Rostr</div></div>
+    <div class="stat"><div class="sn" data-target="2100" data-suffix="+">0</div><div class="sl">Nigerian engineers and operators hired</div></div>
+    <div class="stat"><div class="sn">49</div><div class="sl">Currencies supported for payroll</div></div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="prob-bg">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">The problem</div>
+      <h2 class="reveal">Hiring Nigerian talent is <em>harder than it should be.</em></h2>
+      <p class="reveal">The talent is world-class. The infrastructure to hire it legally hasn't kept up. Until now.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card reveal">
+        <div class="prob-num">// 01 — Entity</div>
+        <h3>You need a Nigerian entity to hire legally</h3>
+        <p>Registering a business entity in Nigeria can take 3–6 months, costs significant legal fees, and requires ongoing compliance management you're not set up for.</p>
+        <span class="prob-tag">Time to hire: 3–6 months</span>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-num">// 02 — Compliance</div>
+        <h3>Tax and labour law is complex and local</h3>
+        <p>PAYE, pension contributions, NHF, NSITF — Nigerian payroll compliance has layers. Getting it wrong exposes you to penalties and puts your employee at risk.</p>
+        <span class="prob-tag">4+ compliance requirements</span>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-num">// 03 — Payroll</div>
+        <h3>International transfers are slow and expensive</h3>
+        <p>Paying a Nigerian employee via wire transfer costs 5–8% in fees and takes 3–5 days. That's not how you build trust with your best engineers.</p>
+        <span class="prob-tag">Up to 8% in fees</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-bg" id="how">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">How it works</div>
+      <h2 class="reveal">From offer letter to <em>day one in 5 days.</em></h2>
+      <p class="reveal">We handle everything between your hiring decision and your new employee's first day. You stay focused on building.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-step reveal">
+        <div class="tl-num">1</div>
+        <h3>Submit hire request</h3>
+        <p>Tell us who you're hiring, their salary, currency, and start date. Takes 5 minutes.</p>
+        <span class="tl-badge">Day 1</span>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">2</div>
+        <h3>Compliance cleared</h3>
+        <p>We run tax registration, right-to-work verification, and all legal checks on your behalf.</p>
+        <span class="tl-badge">Day 2</span>
+      </div>
+      <div class="tl-step active reveal">
+        <div class="tl-num">3</div>
+        <h3>Contract signed</h3>
+        <p>Employment agreement drafted, localised for Nigerian law, and e-signed by both parties.</p>
+        <span class="tl-badge">Day 3</span>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">4</div>
+        <h3>Employee onboarded</h3>
+        <p>Benefits enrolled, payroll set up, equipment ordered. Your new hire is ready for day one.</p>
+        <span class="tl-badge">Day 5</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="feat-bg" id="features">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">Features</div>
+      <h2 class="reveal">Everything between offer and <em>first payslip.</em></h2>
+      <p class="reveal">Rostr isn't just a payroll tool. It's the entire employment infrastructure for your Nigerian team.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-item"><div class="feat-icon">🏛️</div><h3>Employer of Record</h3><p>We are the legal employer. No Nigerian entity required on your side. We carry the compliance risk so you don't have to.</p></div>
+      <div class="feat-item"><div class="feat-icon">📄</div><h3>Digital contracts</h3><p>Nigerian-law-compliant employment agreements drafted, localised, and e-signed. Stored securely and accessible anytime.</p></div>
+      <div class="feat-item"><div class="feat-icon">💱</div><h3>Multi-currency payroll</h3><p>Pay in USD, GBP, EUR, or NGN. Your employee sees their payslip in their local currency. Payouts hit their bank account on time, every time.</p></div>
+      <div class="feat-item"><div class="feat-icon">💳</div><h3>Earned wage access</h3><p>Your Nigerian employees can access up to 50% of their earned salary before payday. A benefit that matters — at no cost to you.</p></div>
+      <div class="feat-item"><div class="feat-icon">📋</div><h3>Tax & compliance automation</h3><p>PAYE, pension (PFA), NHF, and NSITF handled automatically. We file, we remit, we report. You get a clean audit trail.</p></div>
+      <div class="feat-item"><div class="feat-icon">🚀</div><h3>5-day onboarding</h3><p>From signed offer to fully onboarded employee in 5 days. Our record is 48 hours. Your engineers don't wait around for paperwork.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<div class="who-bg" id="who">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">Who it's for</div>
+      <h2 class="reveal">Two types of companies. <em>One solution.</em></h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <span class="who-tag">Global companies</span>
+        <h3>Hiring Nigerian talent from abroad</h3>
+        <p>You've found a brilliant engineer, designer, or operator in Lagos. You want to hire them legally, pay them fairly, and give them real employment benefits — without spending 6 months registering a local entity.</p>
+        <ul class="who-list">
+          <li>No Nigerian entity required — ever</li>
+          <li>Pay in USD, GBP, or EUR — we handle FX</li>
+          <li>Full compliance with Nigerian labour law</li>
+          <li>Terminate cleanly with Rostr handling severance</li>
+        </ul>
+      </div>
+      <div class="who-card featured reveal">
+        <span class="who-tag">Nigerian startups</span>
+        <h3>Managing a distributed Nigerian team</h3>
+        <p>Your team is remote across Lagos, Abuja, and Port Harcourt. You need compliant employment contracts, structured payroll, and employee benefits — without building an entire HR department from scratch.</p>
+        <ul class="who-list">
+          <li>Compliant employment for every team member</li>
+          <li>Structured payroll with pension and PAYE handled</li>
+          <li>Earned wage access as an employee benefit</li>
+          <li>HR infrastructure from day one of hiring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testi-bg">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">What companies say</div>
+      <h2 class="reveal">They hired in Lagos. <em>From everywhere else.</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="tcard reveal">
+        <div class="tmark">"</div>
+        <p class="ttext">We hired three senior engineers from Lagos in the space of two weeks. Each one was fully onboarded, contracted, and paid — legally — without us having to set up a Nigerian entity. Rostr made the decision to hire in Nigeria a no-brainer.</p>
+        <div class="tauthor">
+          <div class="tav">JW</div>
+          <div>
+            <div class="tname">James Whitfield</div>
+            <div class="trole">CTO, BuildStack · London, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard reveal">
+        <div class="tmark">"</div>
+        <p class="ttext">Running payroll across Lagos and Abuja manually was a compliance nightmare. Rostr took over the whole thing — pension, PAYE, NHF — everything. Our HR team went from spending two weeks a month on payroll to two hours. It's not comparable.</p>
+        <div class="tauthor">
+          <div class="tav">AA</div>
+          <div>
+            <div class="tname">Adaeze Achike</div>
+            <div class="trole">Head of People, TradeFlow · Lagos, Nigeria</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-bg" id="pricing">
+  <div class="sw">
+    <div class="sh">
+      <div class="slbl reveal">Pricing</div>
+      <h2 class="reveal">Flat fees. <em>No surprises.</em></h2>
+      <p class="reveal">Every plan includes full compliance, payroll, and contracts. No percentage of salary, no hidden charges.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pcard reveal">
+        <div class="ptier">EOR Starter</div>
+        <div class="pamt">$199 <span>/ employee / mo</span></div>
+        <div class="psub">+ 1.5% payroll processing</div>
+        <div class="pdesc">For small teams hiring their first Nigerian employees. Everything you need to stay compliant.</div>
+        <ul class="plist">
+          <li><span class="pchk">✓</span>Employer of Record</li>
+          <li><span class="pchk">✓</span>Employment contracts</li>
+          <li><span class="pchk">✓</span>PAYE & pension filing</li>
+          <li><span class="pchk">✓</span>Multi-currency payroll</li>
+          <li><span class="pchk">✓</span>Up to 10 employees</li>
+        </ul>
+        <a href="#cta" class="pcta pcta-out">Get started →</a>
+      </div>
+      <div class="pcard feat reveal">
+        <div class="pop-badge">Most popular</div>
+        <div class="ptier">EOR Growth</div>
+        <div class="pamt">$149 <span>/ employee / mo</span></div>
+        <div class="psub">+ 1.0% payroll processing</div>
+        <div class="pdesc">For growing teams with multiple Nigerian hires and ongoing payroll needs.</div>
+        <ul class="plist">
+          <li><span class="pchk">✓</span>Everything in Starter</li>
+          <li><span class="pchk">✓</span>Earned wage access</li>
+          <li><span class="pchk">✓</span>Unlimited employees</li>
+          <li><span class="pchk">✓</span>Priority onboarding (48h)</li>
+          <li><span class="pchk">✓</span>Dedicated account manager</li>
+        </ul>
+        <a href="#cta" class="pcta pcta-solid">Get started →</a>
+      </div>
+      <div class="pcard reveal">
+        <div class="ptier">Payroll Only</div>
+        <div class="pamt">$49 <span>/ employee / mo</span></div>
+        <div class="psub">For companies with an existing Nigerian entity</div>
+        <div class="pdesc">You have the entity. Let Rostr handle PAYE, pension, and payroll processing every month.</div>
+        <ul class="plist">
+          <li><span class="pchk">✓</span>Monthly payroll processing</li>
+          <li><span class="pchk">✓</span>PAYE & statutory filing</li>
+          <li><span class="pchk">✓</span>Payslip generation</li>
+          <li><span class="pchk">✓</span>Earned wage access</li>
+        </ul>
+        <a href="#cta" class="pcta pcta-out">Get started →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap" id="cta">
+  <div class="cta-blob"></div>
+  <div class="cta-inner">
+    <div class="cta-lbl">Start hiring</div>
+    <h2 class="reveal">Your next great hire is in Lagos. <em>We'll handle everything else.</em></h2>
+    <p class="reveal">Submit your first hire request in 5 minutes. Onboarded in 5 days. Compliant from day one.</p>
+    <a href="#" class="btn-coral reveal" style="font-size:1.1rem;padding:1.1rem 2.5rem">Hire Nigerian talent →</a>
+    <div class="cta-note reveal">No entity required · Free to start · First hire onboarded in 5 days</div>
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="flogo">Rostr<span>.</span></div>
+    <div class="fcopy">© 2025 Rostr Technologies Ltd. · Lagos, Nigeria</div>
+    <ul class="flinks"><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Contact</a></li><li><a href="#">API</a></li></ul>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero entrance
+const heroTl = gsap.timeline({delay:.25});
+heroTl
+  .from('#heyebrow', {opacity:0, y:14, duration:.5, ease:'power2.out'})
+  .from('#hh1', {opacity:0, y:36, duration:.85, ease:'power3.out'}, '-=.2')
+  .from('#hsub', {opacity:0, y:20, duration:.6, ease:'power2.out'}, '-=.4')
+  .from('#hact', {opacity:0, y:16, duration:.5, ease:'power2.out'}, '-=.35')
+  .from('#htrust', {opacity:0, y:12, duration:.4, ease:'power2.out'}, '-=.25')
+  .from('#hmock', {opacity:0, y:30, duration:.8, ease:'power2.out'}, '-=.5');
+
+// Pipeline steps stagger on scroll
+ScrollTrigger.create({
+  trigger: '.pc-timeline',
+  start: 'top 80%',
+  once: true,
+  onEnter: () => {
+    gsap.from(['#ps1','#ps2','#ps3','#ps4'], {
+      opacity:0, x:-12, duration:.4, stagger:.15, ease:'power2.out'
+    });
+  }
+});
+
+// Scroll reveals
+gsap.utils.toArray('.reveal').forEach((el, i) => {
+  gsap.fromTo(el, {opacity:0, y:24}, {
+    opacity:1, y:0, duration:.65, ease:'power2.out',
+    delay: (i % 3) * 0.08,
+    scrollTrigger: {trigger:el, start:'top 87%', toggleActions:'play none none none'}
+  });
+});
+
+// Feature grid stagger
+gsap.utils.toArray('.feat-item').forEach((el, i) => {
+  gsap.fromTo(el, {opacity:0, y:20}, {
+    opacity:1, y:0, duration:.5, ease:'power2.out', delay: i * 0.06,
+    scrollTrigger: {trigger:'.feat-grid', start:'top 85%', once:true}
+  });
+});
+
+// Stats counters
+document.querySelectorAll('.sn[data-target]').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const obj = {val: 0};
+  gsap.to(obj, {
+    val: target, duration:1.8, ease:'power2.out',
+    onUpdate: () => { el.textContent = Math.round(obj.val) + suffix; },
+    scrollTrigger: {trigger:el, start:'top 88%', once:true}
+  });
+});
+
+ScrollTrigger.create({
+  start: 80,
+  onEnter: () => document.querySelector('nav').style.boxShadow = '0 2px 20px rgba(13,27,42,0.08)',
+  onLeaveBack: () => document.querySelector('nav').style.boxShadow = 'none'
+});
+</script>
+</body>
+</html>
